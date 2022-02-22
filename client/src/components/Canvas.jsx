@@ -7,6 +7,7 @@ import { Modal, Button, InputGroup, FormControl } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import Rect from '../tools/Rect'
 import axios from 'axios'
+import Chat from './Chat'
 
 
 const Canvas = observer(() => {
@@ -22,7 +23,8 @@ const Canvas = observer(() => {
 		// .then(res => console.log(res))
 	}
 
-	const connectionHandler = () => {
+	const connectionHandler = (e) => {
+		e.preventDefault()
 		canvasState.setUsername(usernameRef.current.value)
 		setShowModal(false)
 	}
@@ -58,7 +60,7 @@ const Canvas = observer(() => {
 				img.onload = () => {
 					console.log(this);
 					ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-                    ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height)
+					ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height)
 				}
 			})
 	}, [])
@@ -98,15 +100,19 @@ const Canvas = observer(() => {
 		<div className="canvas">
 			<Modal show={showModal} onHide={() => { }}>
 				<Modal.Body>
-					<InputGroup>
-						<FormControl placeholder="Введите ваше имя" ref={usernameRef} />
-						<Button onClick={() => connectionHandler()}>
-							Войти
-						</Button>
-					</InputGroup>
+					<form>
+						<InputGroup>
+							<FormControl placeholder="Введите ваше имя" ref={usernameRef} />
+							<Button type="submit" onClick={(e) => connectionHandler(e)}>
+								Войти
+							</Button>
+						</InputGroup>
+					</form>
+
 				</Modal.Body>
 			</Modal>
 			<canvas ref={canvasRef} width={900} height={600} onMouseDown={() => mouseDownHandler()} />
+			<Chat />
 		</div>
 	)
 })
