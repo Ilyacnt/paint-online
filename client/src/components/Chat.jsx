@@ -36,17 +36,17 @@ const Chat = () => {
         messagesState.pushToMessages(message)
 
         const socket = canvasState.socket
-        socket.onopen = () => {
-            socket.send(JSON.stringify(message))
-        }
+
+        socket.send(JSON.stringify(message))
+
         
 
         socket.onmessage = (event) => {
             let msg = JSON.parse(event.data)
-            if(msg.method === 'chat') {
-                console.log(msg);
+            if(msg.method === 'chat' && msg.username !== canvasState.username) {
+                messagesState.pushToMessages(msg)
+                setMessages([...messages, msg])
             }
-            console.log(msg);
         }
         setInputState('')
         
