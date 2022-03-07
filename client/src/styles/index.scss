@@ -30,6 +30,10 @@ body {
     background-color: $bg1_color;
     color: #D7D7D7;
     height: 30px;
+
+    .container {
+        height: 20px;
+    }
 }
 
 .toolbar {
