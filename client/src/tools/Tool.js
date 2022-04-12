@@ -1,9 +1,13 @@
+import { fabric } from 'fabric'
+import canvasState from '../store/canvasState'
+
 export default class Tool {
     constructor(canvas, socket, id) {
         this.canvas = canvas
         this.socket = socket
         this.id = id
         this.ctx = canvas.getContext('2d')
+        // this.canvas = canvasState.canvas
         this.destroyEvents()
     }
 

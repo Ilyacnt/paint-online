@@ -40,11 +40,11 @@ const Toolbar = () => {
 		<div className="toolbar">
 			<div className="container">
 				<div className="toolbar-group1">
-					<BrushSVG className="toolbar-button" onClick={() => toolState.setTool(new Brush(canvasState.canvas, canvasState.socket, canvasState.sessionid))} />
-					<LineSVG className="toolbar-button" />
-					<SquareSVG className="toolbar-button" onClick={() => toolState.setTool(new Rect(canvasState.canvas, canvasState.socket, canvasState.sessionid))} />
-					<EllipseSVG className="toolbar-button" />
-					<EraserSVG className="toolbar-button" onClick={() => toolState.setTool(new Eraser(canvasState.canvas))} />
+					<BrushSVG title="Кисть" className="toolbar-button" onClick={() => toolState.setTool(new Brush(canvasState.canvas, canvasState.socket, canvasState.sessionid))} />
+					<LineSVG title="Линия" className="toolbar-button" />
+					<SquareSVG title="Прямоугольник" className="toolbar-button" onClick={() => toolState.setTool(new Rect(canvasState.canvas, canvasState.socket, canvasState.sessionid))} />
+					<EllipseSVG title="Эллипс" className="toolbar-button" />
+					<EraserSVG title="Ластик" className="toolbar-button" onClick={() => toolState.setTool(new Eraser(canvasState.canvas))} />
 					<div>
 						<PaletteSVG className="toolbar-button" onClick={() => setIsModal(!isModal)} />
 						{
@@ -64,9 +64,9 @@ const Toolbar = () => {
 					</div>
 				</div>
 				<div className="toolbar-group2">
-					<UndoSVG className="toolbar-button" onClick={() => canvasState.undo()} />
-					<RedoSVG className="toolbar-button" onClick={() => canvasState.redo()} />
-					<SaveSVG className="toolbar-button" onClick={() => downloadHandler()} />
+					<UndoSVG title="Действие назад" className="toolbar-button" onClick={() => canvasState.undo()} />
+					<RedoSVG title="Действие вперед" className="toolbar-button" onClick={() => canvasState.redo()} />
+					<SaveSVG title="Сохранить изображение" className="toolbar-button" onClick={() => downloadHandler()} />
 				</div>
 			</div>
 		</div>

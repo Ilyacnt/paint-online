@@ -1,4 +1,7 @@
 import Tool from './Tool'
+import {
+    fabric
+} from 'fabric'
 
 export default class Rect extends Tool {
     constructor(canvas, socket, id) {
@@ -33,6 +36,15 @@ export default class Rect extends Tool {
         this.startX = e.pageX - e.target.offsetLeft
         this.startY = e.pageY - e.target.offsetTop
         this.saved = this.canvas.toDataURL()
+
+        this.rectInstance = new fabric.Rect({
+            left: this.startX,
+            top: this.startY,
+            width: 1,
+            height: 1,
+        })
+        super.fabricCanvas.add(this.rectInstance)
+        console.log(this.rectInstance);
     }
     mouseMoveHandler(e) {
         if (this.mouseDown) {

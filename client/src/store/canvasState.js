@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { fabric } from "fabric"
 
 class CanvasState {
     canvas = null
@@ -13,6 +14,7 @@ class CanvasState {
     }
 
     setCanvas(canvas) {
+        // this.canvas = new fabric.Canvas(canvas)
         this.canvas = canvas
     }
 

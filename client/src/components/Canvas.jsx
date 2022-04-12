@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom'
 import Rect from '../tools/Rect'
 import axios from 'axios'
 import Chat from './Chat'
+import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react"
 
 
 const Canvas = observer(() => {
@@ -16,11 +17,18 @@ const Canvas = observer(() => {
 	const [showModal, setShowModal] = useState(true)
 	const params = useParams()
 
-	const mouseDownHandler = () => {
+	const { editor, onReady } = useFabricJSEditor()
+
+	const mouseUpHandler = () => {
+		console.log('Mouse up canvas');
 		const data = canvasRef.current.toDataURL()
 		canvasState.pushToUndo(data)
 		axios.post(`http://localhost:5000/image?id=${params.id}`, { img: data })
 		// .then(res => console.log(res))
+	}
+
+	const mouseMoveHandler = (e) => {
+		console.log(e);
 	}
 
 	const connectionHandler = (e) => {
@@ -42,7 +50,6 @@ const Canvas = observer(() => {
 			case 'finish':
 				ctx.beginPath()
 				break;
-
 			default:
 				break;
 		}
@@ -51,7 +58,7 @@ const Canvas = observer(() => {
 
 	useEffect(() => {
 		canvasState.setCanvas(canvasRef.current)
-		// toolState.setTool(new Brush(canvasRef.current))
+		toolState.setTool(new Brush(canvasRef.current))
 		let ctx = canvasRef.current.getContext('2d')
 		axios.get(`http://localhost:5000/image?id=${params.id}`)
 			.then(res => {
@@ -108,10 +115,26 @@ const Canvas = observer(() => {
 							</Button>
 						</InputGroup>
 					</form>
-
+					<div className="instruction">
+						<h1>Руководство</h1>
+						<p>Данное приложение предназначено для совместного рисования и проектирования.</p>
+						<p>Для входа в приложение введите своё имя. Оно будет отображатся в общем чате.</p>
+						<p>В панели инструментов в верхней части экрана можно выбрать инструмент для рисования, отменить действие и сохранить изображение</p>
+						<p>
+							Для совместного рисования скопируйте ссылку сгенерированную в адресной строке и отправьте своим коллегам.
+							Все действия на холсте будут видны в рамкох одной сессии, доступ к которой осуществляется по ссылке.
+						</p>
+						<p>Некотрые функции приложения могут работать некорректно, данные недоработки будут исправлены в следующих версиях приложения.</p>
+					</div>
 				</Modal.Body>
 			</Modal>
-			<canvas ref={canvasRef} width={900} height={600} onMouseDown={() => mouseDownHandler()} />
+			<canvas 
+				ref={canvasRef} 
+				width={900} 
+				height={600} 
+				onMouseUp={() => mouseUpHandler()} 
+				/>
+			{/* <FabricJSCanvas ref={canvasRef} onReady={onReady} /> */}
 			<Chat />
 		</div>
 	)
