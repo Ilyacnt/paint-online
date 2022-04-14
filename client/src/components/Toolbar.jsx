@@ -13,6 +13,8 @@ import toolState from '../store/toolState'
 import Brush from '../tools/Brush'
 import Rect from '../tools/Rect'
 import Eraser from '../tools/Eraser'
+import Line from '../tools/Line'
+import Circle from '../tools/Circle'
 import { ChromePicker } from 'react-color';
 
 const Toolbar = () => {
@@ -41,9 +43,9 @@ const Toolbar = () => {
 			<div className="container">
 				<div className="toolbar-group1">
 					<BrushSVG title="Кисть" className="toolbar-button" onClick={() => toolState.setTool(new Brush(canvasState.canvas, canvasState.socket, canvasState.sessionid))} />
-					<LineSVG title="Линия" className="toolbar-button" />
+					<LineSVG title="Линия" className="toolbar-button" onClick={() => toolState.setToole(new Line(canvasState.canvas))} />
 					<SquareSVG title="Прямоугольник" className="toolbar-button" onClick={() => toolState.setTool(new Rect(canvasState.canvas, canvasState.socket, canvasState.sessionid))} />
-					<EllipseSVG title="Эллипс" className="toolbar-button" />
+					<EllipseSVG title="Эллипс" className="toolbar-button" onClick={() => toolState.setTool(new Circle(canvasState.canvas))} />
 					<EraserSVG title="Ластик" className="toolbar-button" onClick={() => toolState.setTool(new Eraser(canvasState.canvas))} />
 					<div>
 						<PaletteSVG className="toolbar-button" onClick={() => setIsModal(!isModal)} />
